@@ -9,9 +9,7 @@ class Home extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.menu),
-            onPressed: () {
-              // Handle menu button press
-            },
+            onPressed: () {},
           ),
         ],
       ),
@@ -21,16 +19,14 @@ class Home extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(
-              'assets/company_logo.png',
+              'assets/company.png',
               width: 200.0,
               height: 200.0,
               fit: BoxFit.contain,
             ),
             SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: () {
-                // Handle new updates button press
-              },
+              onPressed: () {},
               child: Text('New Updates'),
             ),
             SizedBox(height: 10.0),

@@ -68,6 +68,7 @@ class _LoginState extends State<Login> {
                     final Session? session = res.session;
 
                     final User? user = res.user;
+                    Navigator.pushNamed(context, '/home');
                   } catch (e) {
                     print(e);
                   }
