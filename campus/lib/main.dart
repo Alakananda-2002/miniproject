@@ -8,8 +8,9 @@ final supabase = Supabase.instance.client;
 
 Future<void> main() async {
   await Supabase.initialize(
-    url: '',
-    anonKey: '',
+    url: 'https://zwscfjqqwjygfkyqzprm.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3c2NmanFxd2p5Z2ZreXF6cHJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODU3ODgxMjYsImV4cCI6MjAwMTM2NDEyNn0.T54cKNaHayDY5abH1xaVnekeCRIBKgD-WDZ9Bt9RF48',
   );
 
   final Session? session = supabase.auth.currentSession;
