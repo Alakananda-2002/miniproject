@@ -61,9 +61,9 @@ class MyApp extends StatelessWidget {
                           backgroundColor: MaterialStateColor.resolveWith(
                               (states) => Colors.white),
                           padding: MaterialStateProperty.all(
-                              EdgeInsets.symmetric(
+                              const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10))),
-                      child: Text(
+                      child: const Text(
                         "Get Started",
                         style: TextStyle(fontSize: 28, color: Colors.black),
                       ),
