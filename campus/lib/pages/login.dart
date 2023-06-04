@@ -1,3 +1,4 @@
+import 'package:campus/pages/student_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -67,8 +68,11 @@ class _LoginState extends State<Login> {
                     );
                     final Session? session = res.session;
 
-                    final User? user = res.user;
-                    Navigator.pushNamed(context, '/home');
+                    USER = res.user;
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (ctx) => StudentDetailsPage()));
                   } catch (e) {
                     print(e);
                   }
