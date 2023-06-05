@@ -1,3 +1,4 @@
+import 'package:campus/main.dart';
 import 'package:flutter/material.dart';
 
 class CompanyPage extends StatelessWidget {
@@ -39,7 +40,7 @@ class CompanyPage extends StatelessWidget {
             SizedBox(height: 10.0),
             ElevatedButton.icon(
               onPressed: () {
-                // Handle company profile button press
+                Navigator.of(context).pushNamed("/cmp_details");
               },
               icon: Icon(Icons.business),
               label: Text('Company Profile'),
@@ -63,7 +64,8 @@ class CompanyPage extends StatelessWidget {
             SizedBox(height: 10.0),
             ElevatedButton.icon(
               onPressed: () {
-                // Handle logout button press
+                supabase.auth.signOut();
+                Navigator.pushReplacementNamed(context, "/login");
               },
               icon: Icon(Icons.exit_to_app),
               label: Text('Logout'),

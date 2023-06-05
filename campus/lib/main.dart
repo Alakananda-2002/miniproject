@@ -5,6 +5,7 @@ import 'package:campus/pages/new_updates_page.dart';
 import 'package:campus/pages/placement_detailed_edit.dart';
 import 'package:campus/pages/placement_home.dart';
 import 'package:campus/pages/placement_profile.dart';
+import 'package:campus/pages/sign_up.dart';
 import 'package:campus/pages/student_details_page.dart';
 import 'package:campus/pages/student_profile.dart';
 import 'package:campus/pages/student_home.dart';
@@ -23,6 +24,7 @@ Future<void> main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3c2NmanFxd2p5Z2ZreXF6cHJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODU3ODgxMjYsImV4cCI6MjAwMTM2NDEyNn0.T54cKNaHayDY5abH1xaVnekeCRIBKgD-WDZ9Bt9RF48',
   );
   supabase = Supabase.instance.client;
+
   final Session? session = supabase.auth.currentSession;
   USER = session?.user;
 
@@ -39,7 +41,8 @@ Future<void> main() async {
       "/pla_profile": (ctx) => PlacementOfficerPage(),
       "/pla_details": (ctx) => PlacementOfficerDetailsPage(),
       "/job": (ctx) => JobNotificationPage(),
-      "/news": (context) => NewsPage()
+      "/news": (context) => NewsPage(),
+      "/signup": (ctx) => SignUpPage()
     },
     home: (session == null ? const MyApp() : Home()),
   ));

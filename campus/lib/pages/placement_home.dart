@@ -21,8 +21,8 @@ class PlacementOfficerHomepage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/students_image.png',
-              width: 200.0,
+              'assets/collage.png',
+              width: MediaQuery.of(context).size.width,
               height: 200.0,
               fit: BoxFit.contain,
             ),
