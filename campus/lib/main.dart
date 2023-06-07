@@ -29,6 +29,7 @@ Future<void> main() async {
   USER = session?.user;
 
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     routes: {
       "/login": (ctx) => Login(),
       "/stu_home": (ctx) => Home(),

@@ -1,3 +1,5 @@
+import 'package:campus/main.dart';
+import 'package:campus/pages/placement_detailed_edit.dart';
 import 'package:flutter/material.dart';
 
 class PlacementOfficerPage extends StatelessWidget {
@@ -29,60 +31,86 @@ class PlacementOfficerPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle home button press
-              },
-              icon: Icon(Icons.home),
-              label: Text('Home'),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // Handle home button press
+                },
+                icon: Icon(Icons.home),
+                label: Text('Home'),
+              ),
             ),
             SizedBox(height: 10.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle profile button press
-              },
-              icon: Icon(Icons.person),
-              label: Text('Profile'),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (ctx) => PlacementOfficerDetailsPage()));
+                },
+                icon: Icon(Icons.person),
+                label: Text('Profile'),
+              ),
             ),
             SizedBox(height: 10.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle settings button press
-              },
-              icon: Icon(Icons.settings),
-              label: Text('Settings'),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // Handle settings button press
+                },
+                icon: Icon(Icons.settings),
+                label: Text('Settings'),
+              ),
             ),
             SizedBox(height: 10.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle statistics button press
-              },
-              icon: Icon(Icons.bar_chart),
-              label: Text('Statistics'),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // Handle statistics button press
+                },
+                icon: Icon(Icons.bar_chart),
+                label: Text('Statistics'),
+              ),
             ),
             SizedBox(height: 10.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle logout button press
-              },
-              icon: Icon(Icons.exit_to_app),
-              label: Text('Logout'),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  supabase.auth.signOut();
+                  Navigator.pushNamed(context, "/login");
+                  ;
+                },
+                icon: Icon(Icons.exit_to_app),
+                label: Text('Logout'),
+              ),
             ),
             SizedBox(height: 10.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle about us button press
-              },
-              icon: Icon(Icons.info),
-              label: Text('About Us'),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // Handle about us button press
+                },
+                icon: Icon(Icons.info),
+                label: Text('About Us'),
+              ),
             ),
             SizedBox(height: 10.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle help button press
-              },
-              icon: Icon(Icons.help),
-              label: Text('Help'),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // Handle help button press
+                },
+                icon: Icon(Icons.help),
+                label: Text('Help'),
+              ),
             ),
           ],
         ),
