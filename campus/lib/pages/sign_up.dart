@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -93,43 +93,75 @@ class _SignUpPageState extends State<SignUpPage> {
     final response =
         await supabase.auth.signUp(email: email, password: password);
 
-    if (response.session == null) {
-      // Handle sign-up error
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text("Unable to sign up"),
-            actions: [
-              TextButton(
-                child: Text('OK'),
-                onPressed: () => Navigator.pop(context),
+    if (context.mounted) {
+      if (response.session == null) {
+        // Handle sign-up error
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text("Unable to sign up"),
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        await Supabase.instance.client
+            .from(selectedRole == "/pla_home"
+                ? 'placement_officer'
+                : selectedRole == '/cmp_home'
+                    ? "company"
+                    : "student")
+            .insert({"uuid": supabase.auth.currentSession?.user.id});
+
+        final role = selectedRole == "/pla_home"
+            ? 'placement_officer'
+            : selectedRole == '/cmp_home'
+                ? "company"
+                : "student";
+        await Supabase.instance.client.from("role").insert(
+            {"uuid": supabase.auth.currentSession?.user.id, "role": role});
+
+        (await SharedPreferences.getInstance()).setString("role", role);
+        // Sign-up successful
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Success'),
+              icon: Icon(
+                Icons.check,
+                size: 30,
+                color: Colors.green,
               ),
-            ],
-          );
-        },
-      );
-    } else {
-      // Sign-up successful
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Success'),
-            content: Text('Sign-up successful!'),
-            actions: [
-              TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pushReplacementNamed(context, selectedRole);
-                },
-              ),
-            ],
-          );
-        },
-      );
+              content: Text('Sign-up successful!'),
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        selectedRole == "/pla_home"
+                            ? '/pla_profile'
+                            : selectedRole == '/cmp_home'
+                                ? "/cmp_details"
+                                : "/stu_profile",
+                        (Route<dynamic> route) => false);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
 }

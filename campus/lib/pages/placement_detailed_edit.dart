@@ -1,4 +1,6 @@
+import 'package:campus/main.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class PlacementOfficerDetailsPage extends StatefulWidget {
   @override
@@ -13,8 +15,34 @@ class _PlacementOfficerDetailsPageState
   TextEditingController _institutionController = TextEditingController();
   TextEditingController _branchController = TextEditingController();
 
-  void _submitForm() {
+  bool isEmpty = false;
+
+  void _submitForm() async {
     // Implement form submission functionality here
+    final response =
+        await Supabase.instance.client.from('placement_officer').update({
+      "name": _nameController.text,
+      "phone": _phoneController.text,
+      "institution": _institutionController.text,
+      "branch": _branchController.text
+    }).eq("uuid", supabase.auth.currentUser?.id);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    (() async {
+      final response =
+          await Supabase.instance.client.from('placement_officer').select();
+      print(response.toString());
+      for (var i in response) {
+        _nameController.text = i['name'];
+        _phoneController.text = i['phone'];
+        _institutionController.text = i['institution'];
+        _branchController.text = i['branch'];
+      }
+      setState(() {});
+    })();
   }
 
   @override

@@ -81,7 +81,7 @@ class StudentDetailsPage extends StatelessWidget {
                 onPressed: () async {
                   // Handle logout button press
                   await supabase.auth.signOut();
-                  Navigator.of(context).pushNamed('/login');
+                  Navigator.of(context).pushReplacementNamed('/login');
                 },
                 icon: Icon(Icons.exit_to_app),
                 label: Text('Logout'),

@@ -1,8 +1,12 @@
+import 'package:campus/pages/placement_home.dart';
 import 'package:campus/pages/student_details_page.dart';
+import 'package:campus/pages/student_home.dart';
+import 'package:campus/pages/student_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import '../main.dart';
+import 'company_home.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -68,12 +72,44 @@ class _LoginState extends State<Login> {
                           password: passsword,
                         );
                         final Session? session = res.session;
-
                         USER = res.user;
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (ctx) => StudentDetailsPage()));
+                        if (session != null) {
+                          final resp = await Supabase.instance.client
+                              .from('role')
+                              .select()
+                              .eq("uuid",
+                                  supabase.auth.currentSession?.user.id);
+                          print(supabase.auth.currentSession?.user.id);
+                          print(resp.toString());
+                          role = resp[0]['role'];
+                          if (role != null) {
+                            (await SharedPreferences.getInstance())
+                                .setString('role', role!);
+                          }
+                          if (context.mounted) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (ctx) => role == "company"
+                                        ? CompanyHomepage()
+                                        : role == "student"
+                                            ? StudentHomePage()
+                                            : PlacementOfficerHomepage()));
+                          }
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                    content: Text("Eroor login"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("ok"))
+                                    ],
+                                  ));
+                        }
                       } catch (e) {
                         print(e);
                       }

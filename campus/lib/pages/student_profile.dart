@@ -34,29 +34,34 @@ class _StudentDetailsPageState extends State<StudentProfileDetailsPage> {
 
     final response = await supabase.from('student').update(
       {
-        'firstNameController': _firstNameController.text,
-        'lastNameController': _lastNameController.text,
-        'addressController': _addressController.text,
-        'mobileNumberController': _mobileNumberController.text,
-        'dateOfBirthController': _dateOfBirthController.text,
-        'qualificationController': _qualificationController.text,
-        'degreeProgramController': _degreeProgramController.text,
-        'majorStreamController': _majorStreamController.text,
-        'institutionController': _institutionController.text,
-        'languageController': _languageController.text,
-        'cgpaController': _cgpaController.text,
-        'projectController': _projectController.text,
-        'skillsController': _skillsController.text,
+        "name": _firstNameController.text,
+        "address": _addressController.text,
+        "phn no": _mobileNumberController.text,
+        "date of birth": _dateOfBirthController.text,
+        "qualification": _qualificationController.text,
+        "degree program": _degreeProgramController.text,
+        "institution": _institutionController.text,
+        "language": _languageController.text,
+        "CGPA": double.parse(_cgpaController.text),
+        "skills": _skillsController.text,
+        "major stream": _majorStreamController.text,
       },
-    ).match({'firstNameController': _firstNameController.text});
-    showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-              content: Text("Data Updated succesfully"),
-              actions: [
-                TextButton(onPressed: () {}, child: Text("Hello world"))
-              ],
-            ));
+    ).match({'uuid': supabase.auth.currentSession?.user.id});
+    if (context.mounted) {
+      showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                content: const Text("Data Updated succesfully"),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/stu_home", (Route<dynamic> al) => false);
+                      },
+                      child: const Text("ok"))
+                ],
+              ));
+    }
   }
 
   @override
@@ -64,21 +69,23 @@ class _StudentDetailsPageState extends State<StudentProfileDetailsPage> {
     super.initState();
 
     (() async {
-      final response = await Supabase.instance.client.from('student').select();
+      final response = await Supabase.instance.client
+          .from('student')
+          .select()
+          .eq("uuid", supabase.auth.currentSession?.user.id);
+      print(response.toString());
       for (var i in response) {
-        _firstNameController.text = i['firstnamecontroller'];
-        _lastNameController.text = i['lastnamecontroller'];
-        _addressController.text = i['addresscontroller'];
-        _mobileNumberController.text = i['mobilenumbercontroller'];
-        _dateOfBirthController.text = i['dateofbirthcontroller'];
-        _degreeProgramController.text = i['degreeprogramcontroller'];
-        _institutionController.text = i['institutioncontroller'];
-        _languageController.text = i['languagecontroller'];
-        _cgpaController.text = i['cgpacontroller'];
-        _projectController.text = i['projectcontroller'];
-        _skillsController.text = i['skillscontroller'];
-        _qualificationController.text = i['qualificationcontroller'];
-        _majorStreamController.text = i['majorstreamcontroller'];
+        _firstNameController.text = i['name'];
+        _addressController.text = i['address'];
+        _mobileNumberController.text = i['phn no'];
+        _dateOfBirthController.text = i['date of birth'];
+        _qualificationController.text = i['qualification'];
+        _degreeProgramController.text = i['degree program'];
+        _institutionController.text = i['institution'];
+        _languageController.text = i['language'];
+        _cgpaController.text = i['CGPA'].toString();
+        _skillsController.text = i['skills'];
+        _majorStreamController.text = i['major stream'];
         break;
       }
     })();
@@ -100,13 +107,14 @@ class _StudentDetailsPageState extends State<StudentProfileDetailsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                "Edit Student Details",
+                style: TextStyle(fontSize: 25),
+              ),
+              SizedBox(height: 20.0),
               TextField(
                 controller: _firstNameController,
-                decoration: InputDecoration(labelText: 'First Name'),
-              ),
-              TextField(
-                controller: _lastNameController,
-                decoration: InputDecoration(labelText: 'Last Name'),
+                decoration: InputDecoration(labelText: 'Name'),
               ),
               TextField(
                 controller: _addressController,
@@ -145,21 +153,8 @@ class _StudentDetailsPageState extends State<StudentProfileDetailsPage> {
                 decoration: InputDecoration(labelText: 'CGPA'),
               ),
               TextField(
-                controller: _projectController,
-                decoration: InputDecoration(labelText: 'Project'),
-              ),
-              TextField(
                 controller: _skillsController,
                 decoration: InputDecoration(labelText: 'Skills'),
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                'Uploaded File: $_uploadedFileName',
-                style: TextStyle(fontSize: 16.0),
-              ),
-              ElevatedButton(
-                onPressed: _uploadFile,
-                child: Text('Upload Document'),
               ),
               SizedBox(height: 20.0),
               ElevatedButton(

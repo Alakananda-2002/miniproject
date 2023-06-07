@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -6,25 +7,23 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
-  List<News> newsList = [
-    News(
-        title: 'News 1',
-        description: 'This is news 1 description.',
-        imageUrl:
-            'https://images.freeimages.com/images/large-previews/292/healing-field-flags-5-1420195.jpg'),
-    News(
-      title: 'News 2',
-      description: 'This is news 2 description.',
-      imageUrl:
-          'https://media.istockphoto.com/id/1141484375/photo/fresh-tea-bud-and-leaves.jpg?s=612x612&w=0&k=20&c=7YTXFfNF6y2yBed8SfeVdSKobvw1orughjHXJA0z-QE=',
-    ),
-    News(
-      title: 'News 3',
-      description: 'This is news 3 description.',
-      imageUrl:
-          'https://media.istockphoto.com/id/1141484374/photo/growing-tea-leaves.jpg?s=612x612&w=0&k=20&c=5Am_QuCEftHA3ZPeOHRFXX8WReXGrI_xqcV9RM4D83w=',
-    ),
-  ];
+  List<News> newsList = [];
+  @override
+  void initState() {
+    super.initState();
+    (() async {
+      final response =
+          await Supabase.instance.client.from('new_updates').select();
+      print(response.toString());
+      for (var i in response) {
+        newsList.add(News(
+            title: i['heading'],
+            description: i['description'],
+            imageUrl: i["image"]));
+      }
+      setState(() {});
+    })();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +31,51 @@ class _NewsPageState extends State<NewsPage> {
       appBar: AppBar(
         title: Text('News'),
       ),
-      body: ListView.builder(
-        itemCount: newsList.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: Image.network(newsList[index].imageUrl),
-            title: Text(newsList[index].title),
-            subtitle: Text(newsList[index].description),
-          );
-        },
-      ),
+      body: (newsList.isEmpty)
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: newsList.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 121, 121, 121)
+                            .withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  margin: EdgeInsets.all(10),
+                  child: Column(children: [
+                    Image.network(newsList[index].imageUrl),
+                    Text(
+                      newsList[index].title,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text(newsList[index].description,
+                        style: TextStyle(fontSize: 14)),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {}, child: Text("Apply now"))
+                      ],
+                    )
+                  ]),
+                );
+              },
+            ),
     );
   }
 }

@@ -30,13 +30,6 @@ class CompanyPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle home button press
-              },
-              icon: const Icon(Icons.home),
-              label: const Text('Home'),
-            ),
             const SizedBox(height: 10.0),
             SizedBox(
               width: MediaQuery.of(context).size.width,
@@ -45,7 +38,7 @@ class CompanyPage extends StatelessWidget {
                   Navigator.of(context).pushNamed("/cmp_details");
                 },
                 icon: Icon(Icons.business),
-                label: Text('Company Profile'),
+                label: Text('Edit company details'),
               ),
             ),
             SizedBox(height: 10.0),
@@ -59,25 +52,17 @@ class CompanyPage extends StatelessWidget {
                 label: Text('Current Recruiting'),
               ),
             ),
-            const SizedBox(height: 10.0),
+            SizedBox(height: 10.0),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // Handle settings button press
+                  supabase.auth.signOut();
+                  Navigator.pushReplacementNamed(context, "/login");
                 },
-                icon: Icon(Icons.settings),
-                label: Text('Settings'),
+                icon: Icon(Icons.exit_to_app),
+                label: Text('Logout'),
               ),
-            ),
-            SizedBox(height: 10.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                supabase.auth.signOut();
-                Navigator.pushReplacementNamed(context, "/login");
-              },
-              icon: Icon(Icons.exit_to_app),
-              label: Text('Logout'),
             ),
             SizedBox(height: 10.0),
             SizedBox(

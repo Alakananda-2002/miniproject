@@ -33,7 +33,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             TextField(
               controller: _newPasswordController,
               decoration: InputDecoration(
