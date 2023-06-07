@@ -9,7 +9,7 @@ class CompanyPage extends StatelessWidget {
         title: const Text('Company Page'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -29,15 +29,15 @@ class CompanyPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             ElevatedButton.icon(
               onPressed: () {
                 // Handle home button press
               },
-              icon: Icon(Icons.home),
-              label: Text('Home'),
+              icon: const Icon(Icons.home),
+              label: const Text('Home'),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton.icon(
@@ -59,7 +59,7 @@ class CompanyPage extends StatelessWidget {
                 label: Text('Current Recruiting'),
               ),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton.icon(
