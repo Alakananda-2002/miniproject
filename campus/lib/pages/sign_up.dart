@@ -12,7 +12,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String selectedRole = "stu_home";
+  String selectedRole = "/stu_home";
 
   @override
   Widget build(BuildContext context) {

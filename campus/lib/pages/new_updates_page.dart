@@ -8,11 +8,10 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   List<News> newsList = [
     News(
-      title: 'News 1',
-      description: 'This is news 1 description.',
-      imageUrl:
-          'https://images.freeimages.com/images/large-previews/292/healing-field-flags-5-1420195.jpg',
-    ),
+        title: 'News 1',
+        description: 'This is news 1 description.',
+        imageUrl:
+            'https://images.freeimages.com/images/large-previews/292/healing-field-flags-5-1420195.jpg'),
     News(
       title: 'News 2',
       description: 'This is news 2 description.',
