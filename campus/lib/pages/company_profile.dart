@@ -46,17 +46,6 @@ class CompanyPage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // Handle current recruiting button press
-                },
-                icon: Icon(Icons.work),
-                label: Text('Current Recruiting'),
-              ),
-            ),
-            SizedBox(height: 10.0),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: ElevatedButton.icon(
-                onPressed: () {
                   supabase.auth.signOut();
                   Navigator.pushReplacementNamed(context, "/login");
                 },

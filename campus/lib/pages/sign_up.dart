@@ -54,7 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: const InputDecoration(labelText: 'Password'),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter your password';
@@ -62,13 +62,13 @@ class _SignUpPageState extends State<SignUpPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 RadioButtonRow(
                   changed: (value) {
                     selectedRole = value;
                   },
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -76,7 +76,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       _signUp();
                     }
                   },
-                  child: Text('Sign Up'),
+                  child: const Text('Sign Up'),
                 ),
               ],
             ),
@@ -87,81 +87,91 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<void> _signUp() async {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
+    try {
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
 
-    final response =
-        await supabase.auth.signUp(email: email, password: password);
+      final response =
+          await supabase.auth.signUp(email: email, password: password);
 
-    if (context.mounted) {
-      if (response.session == null) {
-        // Handle sign-up error
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Error'),
-              content: Text("Unable to sign up"),
-              actions: [
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () => Navigator.pop(context),
+      if (context.mounted) {
+        if (response.session == null) {
+          // Handle sign-up error
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Error'),
+                content: Text("Unable to sign up"),
+                actions: [
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          await Supabase.instance.client
+              .from(selectedRole == "/pla_home"
+                  ? 'placement_officer'
+                  : selectedRole == '/cmp_home'
+                      ? "company"
+                      : "student")
+              .insert({"uuid": supabase.auth.currentSession?.user.id});
+
+          final role = selectedRole == "/pla_home"
+              ? 'placement_officer'
+              : selectedRole == '/cmp_home'
+                  ? "company"
+                  : "student";
+          await Supabase.instance.client.from("role").insert(
+              {"uuid": supabase.auth.currentSession?.user.id, "role": role});
+
+          (await SharedPreferences.getInstance()).setString("role", role);
+          var res = await Supabase.instance.client
+              .from("student")
+              .select<PostgrestList>('id');
+
+          (await SharedPreferences.getInstance()).setString("id", role);
+          // Sign-up successful
+
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Success'),
+                icon: Icon(
+                  Icons.check,
+                  size: 30,
+                  color: Colors.green,
                 ),
-              ],
-            );
-          },
-        );
-      } else {
-        await Supabase.instance.client
-            .from(selectedRole == "/pla_home"
-                ? 'placement_officer'
-                : selectedRole == '/cmp_home'
-                    ? "company"
-                    : "student")
-            .insert({"uuid": supabase.auth.currentSession?.user.id});
-
-        final role = selectedRole == "/pla_home"
-            ? 'placement_officer'
-            : selectedRole == '/cmp_home'
-                ? "company"
-                : "student";
-        await Supabase.instance.client.from("role").insert(
-            {"uuid": supabase.auth.currentSession?.user.id, "role": role});
-
-        (await SharedPreferences.getInstance()).setString("role", role);
-        // Sign-up successful
-
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Success'),
-              icon: Icon(
-                Icons.check,
-                size: 30,
-                color: Colors.green,
-              ),
-              content: Text('Sign-up successful!'),
-              actions: [
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        selectedRole == "/pla_home"
-                            ? '/pla_profile'
-                            : selectedRole == '/cmp_home'
-                                ? "/cmp_details"
-                                : "/stu_profile",
-                        (Route<dynamic> route) => false);
-                  },
-                ),
-              ],
-            );
-          },
-        );
+                content: Text('Sign-up successful!'),
+                actions: [
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          selectedRole == "/pla_home"
+                              ? '/pla_profile'
+                              : selectedRole == '/cmp_home'
+                                  ? "/cmp_details"
+                                  : "/stu_profile",
+                          (Route<dynamic> route) => false);
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
       }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
 }

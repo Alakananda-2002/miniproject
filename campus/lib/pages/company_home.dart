@@ -51,9 +51,9 @@ class CompanyHomepage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle company registration button press
+                  Navigator.of(context).pushNamed("/addnews");
                 },
-                child: Text('Company Registration'),
+                child: Text('Add a news'),
               ),
             ),
             SizedBox(height: 10.0),
@@ -61,7 +61,7 @@ class CompanyHomepage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle applied job details button press
+                  Navigator.of(context).pushNamed("/applied");
                 },
                 child: Text('Applied Job Details'),
               ),

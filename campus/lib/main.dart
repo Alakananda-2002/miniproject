@@ -1,3 +1,5 @@
+import 'package:campus/pages/add_news.dart';
+import 'package:campus/pages/applied_details.dart';
 import 'package:campus/pages/comany_details.dart';
 import 'package:campus/pages/company_home.dart';
 import 'package:campus/pages/job_notifications_page.dart';
@@ -44,7 +46,9 @@ Future<void> main() async {
       "/pla_details": (ctx) => PlacementOfficerDetailsPage(),
       "/jobs": (ctx) => JobNotificationPage(),
       "/news": (context) => NewsPage(),
-      "/signup": (ctx) => SignUpPage()
+      "/signup": (ctx) => SignUpPage(),
+      "/addnews": (ctx) => AddNewsPage(),
+      "/applied": (ctx) => AppliedDetailsPage()
     },
     home: session == null
         ? const MyApp()

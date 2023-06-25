@@ -110,7 +110,7 @@ class _CompanyListState extends State<CompanyList> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
+          const Padding(
             padding: const EdgeInsets.all(15.0),
             child: Row(
               children: [
@@ -136,7 +136,7 @@ class _CompanyListState extends State<CompanyList> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Item("Taata",
+              Item("Tata",
                   "https://zwscfjqqwjygfkyqzprm.supabase.co/storage/v1/object/public/mini/company/IBM"),
               Item("Infosys",
                   "https://zwscfjqqwjygfkyqzprm.supabase.co/storage/v1/object/public/mini/company/infosys")

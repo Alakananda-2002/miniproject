@@ -10,10 +10,8 @@ class PlacementOfficerHomepage extends StatelessWidget {
         const begin = Offset(1.0, 0.0);
         const end = Offset.zero;
         const curve = Curves.ease;
-
         var tween =
             Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
         return SlideTransition(
           position: animation.drive(tween),
           child: child,
@@ -26,7 +24,7 @@ class PlacementOfficerHomepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Placement Officer Homepage'),
+        title: const Text('Placement Officer Homepage'),
         actions: [
           IconButton(
             icon: const Icon(Icons.menu),

@@ -1,3 +1,4 @@
+import 'package:campus/main.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -17,6 +18,7 @@ class _NewsPageState extends State<NewsPage> {
       print(response.toString());
       for (var i in response) {
         newsList.add(News(
+            id: i['id'],
             title: i['heading'],
             description: i['description'],
             imageUrl: i["image"]));
@@ -32,7 +34,7 @@ class _NewsPageState extends State<NewsPage> {
         title: Text('News'),
       ),
       body: (newsList.isEmpty)
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
@@ -58,18 +60,53 @@ class _NewsPageState extends State<NewsPage> {
                     Image.network(newsList[index].imageUrl),
                     Text(
                       newsList[index].title,
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                     Text(newsList[index].description,
-                        style: TextStyle(fontSize: 14)),
-                    SizedBox(
+                        style: const TextStyle(fontSize: 14)),
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         ElevatedButton(
-                            onPressed: () {}, child: Text("Apply now"))
+                            onPressed: () async {
+                              await Supabase.instance.client
+                                  .from('applied')
+                                  .insert({
+                                "student_id":
+                                    supabase.auth.currentSession?.user.id,
+                                "news_id": newsList[index].id
+                              });
+
+                              if (mounted) {
+                                showDialog(
+                                    context: context,
+                                    builder: (ctx) => AlertDialog(
+                                          content: const Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.check_rounded,
+                                                color: Colors.green,
+                                                size: 50,
+                                              ),
+                                              Text(
+                                                  "Your Application for this role was successfully submitted .The company will notify the remaining procedure soon.")
+                                            ],
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("OK"))
+                                          ],
+                                        ));
+                              }
+                            },
+                            child: const Text("Apply now"))
                       ],
                     )
                   ]),
@@ -81,11 +118,13 @@ class _NewsPageState extends State<NewsPage> {
 }
 
 class News {
+  final int id;
   final String title;
   final String description;
   final String imageUrl;
 
   News({
+    required this.id,
     required this.title,
     required this.description,
     required this.imageUrl,
