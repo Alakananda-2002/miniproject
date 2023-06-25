@@ -1,4 +1,11 @@
+import 'package:campus/pages/collage_details.dart';
+import 'package:campus/pages/detailsofcomp.dart';
+import 'package:campus/pages/hiring.dart';
+import 'package:campus/pages/packages.dart';
 import 'package:campus/pages/placement_profile.dart';
+import 'package:campus/pages/placent_student_details.dart';
+import 'package:campus/pages/ranklist.dart';
+import 'package:campus/pages/training.dart';
 import 'package:flutter/material.dart';
 
 class PlacementOfficerHomepage extends StatelessWidget {
@@ -50,6 +57,10 @@ class PlacementOfficerHomepage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (ctx) => CollegeDetailsPage()));
                   // Handle campus details button press
                 },
                 child: Text('Campus Details'),
@@ -61,6 +72,10 @@ class PlacementOfficerHomepage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   // Handle student details button press
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (ctx) => PlacementStudentDetails()));
                 },
                 child: Text('Student Details'),
               ),
@@ -70,6 +85,8 @@ class PlacementOfficerHomepage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (ctx) => CompDetails()));
                   // Handle company details button press
                 },
                 child: Text('Company Details'),
@@ -80,6 +97,9 @@ class PlacementOfficerHomepage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (ctx) => HomePage()));
+
                   // Handle training programs button press
                 },
                 child: Text('Training Programs'),
@@ -90,6 +110,8 @@ class PlacementOfficerHomepage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (ctx) => HiringDetails()));
                   // Handle hiring details button press
                 },
                 child: Text('Hiring Details'),
@@ -100,6 +122,8 @@ class PlacementOfficerHomepage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (ctx) => RankListPage()));
                   // Handle rank list button press
                 },
                 child: Text('Rank List'),
@@ -110,6 +134,12 @@ class PlacementOfficerHomepage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (ctx) => PackagesPage(
+                                packages: PackagesButton.packages,
+                              )));
                   // Handle packages button press
                 },
                 child: Text('Packages'),

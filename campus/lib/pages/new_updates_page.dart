@@ -80,6 +80,13 @@ class _NewsPageState extends State<NewsPage> {
                                 "news_id": newsList[index].id
                               });
 
+                              await Supabase.instance.client
+                                  .from('jobapp')
+                                  .insert({
+                                "uid": supabase.auth.currentSession?.user.id,
+                                "heading": newsList[index].title
+                              });
+
                               if (mounted) {
                                 showDialog(
                                     context: context,

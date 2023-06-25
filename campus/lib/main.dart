@@ -2,6 +2,7 @@ import 'package:campus/pages/add_news.dart';
 import 'package:campus/pages/applied_details.dart';
 import 'package:campus/pages/comany_details.dart';
 import 'package:campus/pages/company_home.dart';
+import 'package:campus/pages/current_status.dart';
 import 'package:campus/pages/job_notifications_page.dart';
 import 'package:campus/pages/new_updates_page.dart';
 import 'package:campus/pages/placement_detailed_edit.dart';
@@ -48,7 +49,8 @@ Future<void> main() async {
       "/news": (context) => NewsPage(),
       "/signup": (ctx) => SignUpPage(),
       "/addnews": (ctx) => AddNewsPage(),
-      "/applied": (ctx) => AppliedDetailsPage()
+      "/applied": (ctx) => AppliedDetailsPage(),
+      "/cs": (ctx) => CurrentStatus()
     },
     home: session == null
         ? const MyApp()

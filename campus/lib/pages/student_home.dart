@@ -128,18 +128,18 @@ class _CompanyListState extends State<CompanyList> {
               children: [
                 Item("IBM",
                     "https://zwscfjqqwjygfkyqzprm.supabase.co/storage/v1/object/public/mini/company/IBM"),
-                Item("Taata",
-                    "https://zwscfjqqwjygfkyqzprm.supabase.co/storage/v1/object/public/mini/company/IBM")
+                Item("Infosys",
+                    "https://zwscfjqqwjygfkyqzprm.supabase.co/storage/v1/object/public/mini/company/infosys")
               ],
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Item("Tata",
-                  "https://zwscfjqqwjygfkyqzprm.supabase.co/storage/v1/object/public/mini/company/IBM"),
-              Item("Infosys",
-                  "https://zwscfjqqwjygfkyqzprm.supabase.co/storage/v1/object/public/mini/company/infosys")
+              Item("Wipro",
+                  "https://zwscfjqqwjygfkyqzprm.supabase.co/storage/v1/object/public/mini/company/wipro.png"),
+              Item("TCS",
+                  "https://zwscfjqqwjygfkyqzprm.supabase.co/storage/v1/object/public/mini/company/Tata_Consultancy_Services_Logo.svg.png")
             ],
           )
         ],

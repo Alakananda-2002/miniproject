@@ -57,6 +57,7 @@ class StudentDetailsPage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton.icon(
                 onPressed: () {
+                  Navigator.of(context).pushReplacementNamed('/cs');
                   // Handle current status button press
                 },
                 icon: const Icon(Icons.assignment),
